@@ -114,11 +114,23 @@
  ```
  
  * 提示类找不到
-```1. CookieFilter 找不到，把 home\webapps\examples\WEB-INF\classes\util\CookieFilter.java 文件拷贝到 test\util 目录下  
+```
+   1. CookieFilter 找不到，把 home\webapps\examples\WEB-INF\classes\util\CookieFilter.java 文件拷贝到 test\util 目录下  
    2. HTMLFilter 找不到，把 home\webapps\examples\WEB-INF\classes\util\CookieFilter.java 文件拷贝到 test\util 目录下
    3. 控制台或网页报错：Servlet.service() for servlet [jsp] in context with path [] threw exception [org.apache.jasper.JasperException: Unable to compile class for JSP] with root cause
      编辑 org.apache.catalina.startup.ContextConfig 文件的 configureStart() 方法，添加初始化 JSP 解析器的代码
 ```
+
+* 控制台或网页报错：Servlet.service() for servlet [jsp] in context with path [] threw exception [org.apache.jasper.JasperException: Unable to compile class for JSP] with root cause
+```java
+     protected synchronized void configureStart() {
+        webConfig();
+        //添加jsp解析
+        context.addServletContainerInitializer(new JasperInitializer(), null);
+       }
+```
+
+* 控制台报错：Error configuring application listener of class [listeners.ContextListener] 不影响所以不管
  
  ### 启动流程start
  * bootstrap.init();
